@@ -102,7 +102,7 @@
      *     requestBody=@OA\RequestBody(
      *         request="/Category",
      *         required=true,
-     *         description="The data are passed to the server via the request body",
+     *         description="The dasta are passed to the server via the request body",
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
