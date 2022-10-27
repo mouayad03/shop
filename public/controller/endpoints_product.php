@@ -4,6 +4,24 @@
 	use Slim\Factory\AppFactory;
 	use ReallySimpleJWT\Token;
 
+	/**
+	 * @OA\Get(
+	 * 	path="/Product/{product_id}",
+	 * 	summary="Used to list the data from the product",
+	 * 	tags={"Product_Function"},
+	 * 	@OA\Parameter(
+	 * 		name="product_id",
+	 * 		in="path",
+	 * 		required=true,
+	 * 		description="The ID of the product to fetch",
+	 * 		@OA\Schema(
+	 * 			type="integer",
+	 * 			example="1"
+	 * 		)
+	 * 	),
+	 * 	@OA\Response(response="200", description="OK"),
+	 *  @OA\Response(response="404", description="The ID was not found"))
+	 */
     $app->get("/Product/{product_id}", function (Request $request, Response $response, $args) {
 		//connect to the authentication
 		require "controller/require_authentication.php";
@@ -24,6 +42,24 @@
 		return $response;
 	});
 
+	/**
+	 * @OA\Get(
+	 * 	path="/Products",
+	 * 	summary="Used to list all products from Database",
+	 * 	tags={"Product_Function"},
+	 * 	@OA\Parameter(
+	 * 		name="Products",
+	 * 		in="path",
+	 * 		required=true,
+	 * 		description="You need to write Products in the parameter, to list all data",
+	 * 		@OA\Schema(
+	 * 			type="string",
+	 * 			example="Products"
+	 * 		)
+	 * 	),
+	 * 	@OA\Response(response="200", description="OK"),
+	 *  @OA\Response(response="500", description="An error occurred while fetching the Products."))
+	 */
     $app->get("/Products", function (Request $request, Response $response, $args) {
 		require "controller/require_authentication.php";
 
@@ -39,6 +75,26 @@
 		return $response;
 	});
 
+	/**
+	 * @OA\Post(
+     *     path="/Product",
+     *     summary="Used to create new products",
+     *     tags={"Product_Function"},
+     *     requestBody=@OA\RequestBody(
+     *         request="/Product",
+     *         required=true,
+     *         description="The data are passed to the server via the request body",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="name", type="string", example="Watch"),
+     *                 @OA\Property(property="active", type="integer", example=1)
+     *             )
+     *         )
+     *     ),
+	 * 	   @OA\Response(response="201", description="The Category was successfuly created."),
+	 * 	   @OA\Response(response="400", description="The (name) field must not be empty."))
+	 */
     $app->post("/Product", function (Request $request, Response $response, $args) {
 
 		require "controller/require_authentication.php";
@@ -104,16 +160,49 @@
 			error("The active must between 0 or 11.", 400);
 		}
 		//checking if allthing was good
-		if (create_new_category($sku, $active, $name, $category_id, $image, $description, $price, $stock) === true) {
-			message("The Category was successfuly created.", 201);
+		if (create_new_product($sku, $active, $name, $category_id, $image, $description, $price, $stock) === true) {
+			message("The product was successfuly created.", 201);
 		}
 		//an server error
 		else {
-			error("An error while saving the category.", 500);
+			error("An error while saving the product.", 500);
 		}
 		return $response;		
 	});
 
+	/**
+     * @OA\Put(
+     *     path="/Product/{product_id}",
+     *     summary="(Used to update anything from database",
+     *     tags={"Product_Function"},
+     *     @OA\Parameter(
+     *         name="product_id",
+     *         in="path",
+     *         required=true,
+     *         description="The ID of the product to update",
+     *         @OA\Schema(
+     *             type="integer",
+     *             example="1"
+     *         )
+     *     ),
+     *     requestBody=@OA\RequestBody(
+     *         request="/Product/{product_id}",
+     *         required=true,
+     *         description="Write the new data in Body to update it",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="name", type="string", example="Car"),
+     *                 @OA\Property(property="price", type="integer", example="50")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="The product_data were successfully updated"),
+	 * 	   @OA\Response(response="400", description="The name is too long. Please enter less than 500 letters."),
+	 * 	   @OA\Response(response="404", description="No product found for the ID"),
+	 * 	   @OA\Response(response="500", description="An error occurred while saving the product data.")
+     * )
+	 */
     $app->put("/Product/{product_id}", function (Request $request, Response $response, $args) {
 
 		require "controller/require_authentication.php";
@@ -201,7 +290,7 @@
 		
 			$price = intval($request_data["price"]);
 		
-			if ($active < 0 || $active > 65) {
+			if ($price < 0 || $price > 65) {
 				error("The price must be between 0 and 65.", 400);
 			}
 		
@@ -232,6 +321,24 @@
 		return $response;
 	});
 
+	/**
+     * @OA\Delete(
+     *     path="/Product{product_id}",
+     *     summary="Used to delete the products",
+     *     tags={"Product_Function"},
+     *     @OA\Parameter(
+     *         name="product_id",
+     *         in="path",
+     *         required=true,
+     *         description="The ID of the product to delete",
+     *         @OA\Schema(
+     *             type="integer",
+     *             example=1
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="The product was succsessfuly deleted."),
+	 * 	   @OA\Response(response="404", description="No product found for the ID category_id"))
+	 */
     $app->delete("/Product/{product_id}", function (Request $request, Response $response, $args) {
 		
 		require "controller/require_authentication.php";

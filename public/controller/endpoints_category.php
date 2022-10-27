@@ -58,7 +58,7 @@
 	 * @OA\Get(
 	 * 	path="/Category/{category_id}",
 	 * 	summary="Used to list the data from the category",
-	 * 	tags={"Function"},
+	 * 	tags={"Category_Function"},
 	 * 	@OA\Parameter(
 	 * 		name="category_id",
 	 * 		in="path",
@@ -96,7 +96,7 @@
 	 * @OA\Get(
 	 * 	path="/Categorys",
 	 * 	summary="Used to list all categorys from Database",
-	 * 	tags={"Function"},
+	 * 	tags={"Category_Function"},
 	 * 	@OA\Parameter(
 	 * 		name="Categorys",
 	 * 		in="path",
@@ -128,12 +128,12 @@
     /**
 	 * @OA\Post(
      *     path="/Category",
-     *     summary="Used to create new categorys",
-     *     tags={"Function"},
+     *     summary="Used to create new category",
+     *     tags={"Category_Function"},
      *     requestBody=@OA\RequestBody(
      *         request="/Category",
      *         required=true,
-     *         description="The dasta are passed to the server via the request body",
+     *         description="The data are passed to the server via the request body",
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
@@ -142,7 +142,7 @@
      *             )
      *         )
      *     ),
-	 * 	   @OA\Response(response="201", description="The Category was succsessfuly created."),
+	 * 	   @OA\Response(response="201", description="The Category was successfuly created."),
 	 * 	   @OA\Response(response="400", description="The (name) field must not be empty."))
 	 */
 	$app->post("/Category", function (Request $request, Response $response, $args) {
@@ -187,7 +187,7 @@
      * @OA\Put(
      *     path="/Category/{category_id}",
      *     summary="(Used to update anything from database",
-     *     tags={"Function"},
+     *     tags={"Category_Function"},
      *     @OA\Parameter(
      *         name="category_id",
      *         in="path",
@@ -206,7 +206,7 @@
      *             mediaType="application/json",
      *             @OA\Schema(
      *                 @OA\Property(property="name", type="string", example="Clothes"),
-     *                 @OA\Property(property="price", type="integer", example="50")
+     *                 @OA\Property(property="active", type="integer", example="0")
      *             )
      *         )
      *     ),
@@ -269,7 +269,7 @@
      * @OA\Delete(
      *     path="/Category{category_id}",
      *     summary="Used to delete the categorydata",
-     *     tags={"Function"},
+     *     tags={"Category_Function"},
      *     @OA\Parameter(
      *         name="category_id",
      *         in="path",
