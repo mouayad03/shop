@@ -8,18 +8,21 @@
 	use Slim\Factory\AppFactory;
 	use ReallySimpleJWT\Token;
 
-	/**
-	* @OA\Info(title="Shop", version="1")
-	*/
 
 	//require from another docs.
 	require __DIR__ . "/../vendor/autoload.php";
-	require "model/functions.php";
+	require "model/functions_category.php";
+	require "model/functions_product.php";
 	require_once "config/config.php";
 
 	$app = AppFactory::create();
 
-	require "controller/endpoints.php";
+	/**
+		 * @OA\Info(title="Shop", version="0.1")
+	 */
+
+	require "controller/endpoints_category.php";
+	require "controller/endpoints_product.php";
 
 	$app->run();
 ?>
