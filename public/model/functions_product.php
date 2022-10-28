@@ -33,10 +33,10 @@
 		return $all_products;
 	}
 
-    function create_new_product($sku, $active, $category_id, $name, $image, $description, $price, $stock) {
+    function create_new_product($sku, $active, $name, $image, $description, $price, $stock) {
         global $database;
 
-		$result = $database->query("INSERT INTO `product` (`sku`, `active`, `category_id`, `name`, `image`, `description`, `price`, `stock`) VALUES ('$sku', '$active', '$category_id', '$name', '$image', '$description', '$price', '$stock');");
+		$result = $database->query("INSERT INTO `product` (`sku`, `active`, `name`, `image`, `description`, `price`, `stock`) VALUES ('$sku', '$active', '$name', '$image', '$description', '$price', '$stock');");
 		
         return true;
     }
